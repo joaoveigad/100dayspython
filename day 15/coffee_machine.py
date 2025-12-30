@@ -38,19 +38,12 @@ def compare_resources(user_choice):
     for resource, amount in MENU[user_choice]["ingredients"].items():
         if resources[resource] < amount:
             print(f'Sorry, there is not enough {resource}. Please try again.')
-            refill_resources()
             return False
-    print("yes you did it... you did order your coffee... oh yes... coffee ordered. ok good yes.")
     return True
 
 def subtract_resources(user_choice):
     for resource, amount in MENU[user_choice]["ingredients"].items():
         resources[resource] -= amount
-
-def refill_resources():
-    resources["water"] += 300
-    resources["milk"] += 200
-    resources["coffee"] += 100
 
 def transaction(user_choice):
     pennies = int(input("How many one (1) cent pennies would you like to insert? "))
@@ -66,7 +59,7 @@ def transaction(user_choice):
     )
 
     if value_inserted < MENU[user_choice]["cost"]:
-        print("Not enough cash! Stranger...")
+        print("Not enough cash! Your money will be refunded. Please try again.") #not enough cash! stranger...
         return False
     elif value_inserted > MENU[user_choice]["cost"]:
         change = round(value_inserted - MENU[user_choice]["cost"], 2)
@@ -85,13 +78,13 @@ def turn_on():
         match user_choice:
             case "report":
                 print(resources)
-            case "espresso" | "latte" | "cappuccino":
+            case "espresso" | "latte" | "cappuccino": #what are you buying?
                 print(f'You chose: {user_choice}')
                 compare_resources(user_choice)
                 transaction(user_choice)
                 print("Wait a moment for your drink.")
                 time.sleep(2)
-                print(f'All ready! Enjoy your {user_choice}!')
+                print(f'All ready! Enjoy your {user_choice}!') #comeback anytime...
             case "off":
                 return
             case _:
