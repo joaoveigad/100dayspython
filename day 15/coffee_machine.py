@@ -35,10 +35,20 @@ resources = {
 def compare_resources(user_choice):
     for resource, amount in MENU[user_choice]["ingredients"].items():
         if resources[resource] < amount:
-            print(f'Sorry, there is not enough {resource}')
+            print(f'Sorry, there is not enough {resource}. Please try again.')
+            refill_resources()
             return False
     print("yes you did it... you did order your coffee... oh yes... coffee ordered. ok good yes.")
     return True
+
+def subtract_resources(user_choice):
+    for resource, amount in MENU[user_choice]["ingredients"].items():
+        resources[resource] -= amount
+
+def refill_resources():
+    resources["water"] += 300
+    resources["milk"] += 200
+    resources["coffee"] += 100
 
 def transaction(user_choice):
     pennies = int(input("How many one (1) cent pennies would you like to insert? "))
@@ -60,7 +70,10 @@ def transaction(user_choice):
         change = round(value_inserted - MENU[user_choice]["cost"], 2)
         print(f'Your change: {change}')
         resources["money"] += MENU[user_choice]["cost"]
+        subtract_resources(user_choice)
         return True
+    resources["money"] += MENU[user_choice]["cost"]
+    subtract_resources(user_choice)
     return True
 
 
