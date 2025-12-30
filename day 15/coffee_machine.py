@@ -1,3 +1,5 @@
+import time
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -87,13 +89,12 @@ def turn_on():
                 print(f'You chose: {user_choice}')
                 compare_resources(user_choice)
                 transaction(user_choice)
-                print("Coffee ordered!")
+                print("Wait a moment for your drink.")
+                time.sleep(2)
+                print(f'All ready! Enjoy your {user_choice}!')
             case "off":
                 return
             case _:
                 print("Invalid option")
 
-
-
 turn_on()
-
